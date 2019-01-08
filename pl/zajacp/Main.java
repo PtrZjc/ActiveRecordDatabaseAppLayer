@@ -1,6 +1,6 @@
-package com.domain;
+package pl.zajacp;
 
-import com.domain.db.DatabaseConnection;
+import pl.zajacp.db.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -8,17 +8,9 @@ import java.sql.SQLException;
 public class Main {
 
     public static void main(String[] args) {
-        try {
+
             Connection cnt = DatabaseConnection.getConnection();
 
-
-
-
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }
 

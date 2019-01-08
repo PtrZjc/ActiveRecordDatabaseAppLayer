@@ -1,4 +1,4 @@
-package com.domain.model;
+package pl.zajacp.model;
 
 public class Solution {
 }
