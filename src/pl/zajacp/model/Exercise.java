@@ -12,8 +12,8 @@ public class Exercise {
     private String title;
     private String description;
 
-    public Exercise(int id, String title, String description) {
-        this.id = id;
+    public Exercise(String title, String description) {
+        this.id = 0;
         this.title = title;
         this.description = description;
     }
@@ -58,10 +58,11 @@ public class Exercise {
                     this.id = rs.getInt(1);
                 }
             } else {
-                String sql = "INSERT Exercises SET title=?, description=?";
+                String sql = "UPDATE Exercises SET title=?, description=? WHERE id=?";
                 PreparedStatement psmt = conn.prepareStatement(sql);
                 psmt.setString(1, this.title);
                 psmt.setString(2, this.description);
+                psmt.setInt(3, this.id);
                 psmt.executeUpdate();
             }
         } catch (SQLException e) {
@@ -125,4 +126,12 @@ public class Exercise {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Exercise{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

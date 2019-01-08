@@ -98,12 +98,13 @@ public class User {
                     this.id = rs.getInt(1);
                 }
             } else {
-                String sql = "INSERT Users SET username=?, email=?, password=?, user_group_id=?";
+                String sql = "UPDATE Users SET username=?, email=?, password=?, user_group_id=? WHERE id=?";
                 PreparedStatement psmt = conn.prepareStatement(sql);
                 psmt.setString(1, this.username);
                 psmt.setString(2, this.email);
                 psmt.setString(3, this.password);
                 psmt.setInt(4, this.user_group_id);
+                psmt.setInt(5, this.id);
                 psmt.executeUpdate();
             }
         } catch (SQLException e) {
