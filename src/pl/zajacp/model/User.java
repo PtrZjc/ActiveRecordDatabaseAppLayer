@@ -63,7 +63,7 @@ public class User {
 
     }
 
-    private void setPassword(String password) {
+    public void setPassword(String password) {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
@@ -83,7 +83,7 @@ public class User {
         this.user_group_id = user_group_id;
     }
 
-    public void save() {
+    public boolean save() {
         try (Connection conn = DatabaseConnection.getConnection()) {
             if (this.id == 0) {
                 String sql = "INSERT INTO Users(username, email, password, user_group_id) VALUES (?,?,?,?)";
@@ -109,7 +109,9 @@ public class User {
             }
         } catch (SQLException e) {
             System.out.println("Save failed: " + e.getMessage());
+            return false;
         }
+        return true;
     }
 
     public static User loadById(int id) {
@@ -158,7 +160,7 @@ public class User {
         }
     }
 
-    public void delete() {
+    public boolean delete() {
         try (Connection conn = DatabaseConnection.getConnection()) {
             if (this.id != 0) {
                 String sql = "DELETE FROM Users WHERE id=?";
@@ -169,7 +171,9 @@ public class User {
             }
         } catch (SQLException e) {
             System.out.println("Delete failed: " + e.getMessage());
+            return false;
         }
+        return true;
     }
 
     public static User[] loadAllByGroupId(int id) {
@@ -198,10 +202,16 @@ public class User {
 
     @Override
     public String toString() {
+//        return "User{" +
+//                "id=" + id +
+//                ", username='" + username + '\'' +
+//                ", password='" + password + '\'' +
+//                ", email='" + email + '\'' +
+//                ", user_group_id=" + user_group_id +
+//                '}';
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", user_group_id=" + user_group_id +
                 '}';
