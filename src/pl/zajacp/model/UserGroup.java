@@ -34,7 +34,7 @@ public class UserGroup {
         this.name = name;
     }
 
-    public void save() {
+    public boolean save() {
         try (Connection conn = DatabaseConnection.getConnection()) {
             if (this.id == 0) {
                 String sql = "INSERT INTO User_groups(name) VALUES (?)";
@@ -54,7 +54,9 @@ public class UserGroup {
             }
         } catch (SQLException e) {
             System.out.println("Save failed: " + e.getMessage());
+            return false;
         }
+        return true;
     }
 
     public static UserGroup loadById(int id) {
@@ -97,7 +99,7 @@ public class UserGroup {
         }
     }
 
-    public void delete() {
+    public boolean delete() {
         try (Connection conn = DatabaseConnection.getConnection()) {
             if (this.id != 0) {
                 String sql = "DELETE FROM User_groups WHERE id=?";
@@ -109,7 +111,9 @@ public class UserGroup {
             }
         } catch (SQLException e) {
             System.out.println("Delete failed: " + e.getMessage());
+            return false;
         }
+        return true;
     }
 
     @Override

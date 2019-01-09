@@ -44,7 +44,7 @@ public class Exercise {
         this.description = description;
     }
 
-    public void save() {
+    public boolean save() {
         try (Connection conn = DatabaseConnection.getConnection()) {
             if (this.id == 0) {
                 String sql = "INSERT INTO Exercises(title, description) VALUES (?,?)";
@@ -66,7 +66,9 @@ public class Exercise {
             }
         } catch (SQLException e) {
             System.out.println("Save failed: " + e.getMessage());
+            return false;
         }
+        return true;
     }
 
     public static Exercise loadById(int id) {
@@ -111,7 +113,7 @@ public class Exercise {
         }
     }
 
-    public void delete() {
+    public boolean delete() {
         try (Connection conn = DatabaseConnection.getConnection()) {
             if (this.id != 0) {
                 String sql = "DELETE FROM Exercises WHERE id=?";
@@ -122,7 +124,9 @@ public class Exercise {
             }
         } catch (SQLException e) {
             System.out.println("Delete failed: " + e.getMessage());
+            return false;
         }
+        return true;
     }
 
     @Override

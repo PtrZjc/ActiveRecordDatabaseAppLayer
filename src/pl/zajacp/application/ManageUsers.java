@@ -39,7 +39,7 @@ public class ManageUsers {
     }
 
     private static void addUser(Scanner sc) {
-        System.out.println("\nEditing new User to the database:");
+        System.out.println("\nAdding new user to the database:");
 
         Object[] input = getUserInput(sc);
         User user = new User();
@@ -67,7 +67,7 @@ public class ManageUsers {
 
     private static void editUser(Scanner sc) {
         System.out.println("\nEditing existing User in the database:");
-        int userId = ManageHelper.getInputInt(sc, "Type edited User id:", Integer.MAX_VALUE);
+        int userId = ManageHelper.getInputInt(sc, "Type id of user to be edited: ", Integer.MAX_VALUE);
         User user = User.loadById(userId);
         if (user != null) {
             Object[] input = getUserInput(sc);
@@ -78,7 +78,6 @@ public class ManageUsers {
             if (user.save()) {
                 System.out.println("User edition saved successfully to the database.");
             }
-
         }
 
 //        System.out.println();
@@ -98,7 +97,7 @@ public class ManageUsers {
     private static void deleteUser(Scanner sc) {
 
         System.out.println("\nDeleting User from the database:");
-        int userId = ManageHelper.getInputInt(sc, "Type to be deleted User id: ", Integer.MAX_VALUE);
+        int userId = ManageHelper.getInputInt(sc, "Type id of user to be deleted: ", Integer.MAX_VALUE);
         User user = User.loadById(userId);
         if (user != null && user.delete()) {
             System.out.println("User successfully deleted from the database.");
@@ -147,4 +146,3 @@ public class ManageUsers {
     }
 }
 
-//todo add edit delete quit
