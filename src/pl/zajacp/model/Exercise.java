@@ -44,7 +44,6 @@ public class Exercise {
         this.description = description;
     }
 
-
     public void save() {
         try (Connection conn = DatabaseConnection.getConnection()) {
             if (this.id == 0) {

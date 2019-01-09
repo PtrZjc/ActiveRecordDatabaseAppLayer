@@ -13,14 +13,18 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
-        Solution sol = new Solution("opidss", 1, 1);
-        sol.save();
+
+        Solution[] sol = Solution.loadAllByUserId(6);
+        Arrays.stream(sol).forEach(x -> System.out.println(x));
+        Arrays.stream(sol).forEach(x -> x.save());
+        sol = Solution.loadAllByUserId(6);
+        Arrays.stream(sol).forEach(x -> System.out.println(x));
 
 
-
-//        Date data = Date.valueOf(LocalDate.now());
-//        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
-//        System.out.println(timestamp);
+//        Solution loaded = Solution.loadById(15);
+//        System.out.println(loaded);
+//        loaded.setDescription("blablabla");
+//        loaded.save();
     }
 
 
