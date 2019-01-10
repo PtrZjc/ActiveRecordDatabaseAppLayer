@@ -202,6 +202,19 @@ public class User {
 
     @Override
     public String toString() {
-        return new StringBuilder().append("User{").append("id=").append(id).append(", username='").append(username).append('\'').append(", email='").append(email).append('\'').append(", user_group_id=").append(user_group_id).append('}').toString();
+        return new StringBuilder()
+                .append("User{")
+                .append("id=")
+                .append(id)
+                .append(", username='")
+                .append(username)
+                .append('\'')
+                .append(", email='")
+                .append(email)
+                .append('\'')
+                .append(", user_group_id=")
+                .append(user_group_id)
+                .append('}')
+                .toString();
     }
 }

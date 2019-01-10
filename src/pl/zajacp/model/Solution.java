@@ -219,13 +219,21 @@ public class Solution {
 
     @Override
     public String toString() {
-        return "Solution{" +
-                "id=" + id +
-                ", created=" + created +
-                ", updated=" + updated +
-                ", description='" + description + '\'' +
-                ", exercise_id=" + exercise_id +
-                ", user_id=" + user_id +
-                '}';
+        return new StringBuilder().append("Solution{")
+                .append("id=")
+                .append(id)
+                .append(", created=")
+                .append(created)
+                .append(", updated=")
+                .append(updated)
+                .append(", description='")
+                .append(description)
+                .append('\'')
+                .append(", exercise_id=")
+                .append(exercise_id)
+                .append(", user_id=")
+                .append(user_id)
+                .append('}')
+                .toString();
     }
 }

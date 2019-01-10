@@ -118,6 +118,14 @@ public class UserGroup {
 
     @Override
     public String toString() {
-        return new StringBuilder().append("UserGroup{").append("id=").append(id).append(", name='").append(name).append('\'').append('}').toString();
+        return new StringBuilder()
+                .append("UserGroup{")
+                .append("id=")
+                .append(id)
+                .append(", name='")
+                .append(name)
+                .append('\'')
+                .append('}')
+                .toString();
     }
 }

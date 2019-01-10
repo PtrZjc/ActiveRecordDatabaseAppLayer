@@ -69,7 +69,6 @@ public class ManageExercises {
     }
 
     private static void deleteExercise(Scanner sc) {
-
         System.out.println("\nDeleting Exercise from the database:");
         int exerciseId = ManageHelper.getInputInt(sc, "Type id of exercise to be deleted: ", Integer.MAX_VALUE);
         Exercise exercise = Exercise.loadById(exerciseId);
@@ -91,7 +90,6 @@ public class ManageExercises {
         inputs[1] = email;
         return inputs;
     }
-
 
     private static void runAgain(Scanner sc, int choice) {
         int again = ManageHelper.getInputInt(sc, ManageHelper.ANOTHER_OPERATION, 2);

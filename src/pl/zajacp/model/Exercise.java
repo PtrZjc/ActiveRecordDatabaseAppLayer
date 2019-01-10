@@ -131,6 +131,17 @@ public class Exercise {
 
     @Override
     public String toString() {
-        return new StringBuilder().append("Exercise{").append("id=").append(id).append(", title='").append(title).append('\'').append(", description='").append(description).append('\'').append('}').toString();
+        return new StringBuilder()
+                .append("Exercise{")
+                .append("id=")
+                .append(id)
+                .append(", title='")
+                .append(title)
+                .append('\'')
+                .append(", description='")
+                .append(description)
+                .append('\'')
+                .append('}')
+                .toString();
     }
 }
