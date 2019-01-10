@@ -83,37 +83,6 @@ public class User {
         this.user_group_id = user_group_id;
     }
 
-    public boolean save() {
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            if (this.id == 0) {
-                String sql = "INSERT INTO Users(username, email, password, user_group_id) VALUES (?,?,?,?)";
-                PreparedStatement psmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                psmt.setString(1, this.username);
-                psmt.setString(2, this.email);
-                psmt.setString(3, this.password);
-                psmt.setInt(4, this.user_group_id);
-                psmt.executeUpdate();
-                ResultSet rs = psmt.getGeneratedKeys();
-                if (rs.next()) {
-                    this.id = rs.getInt(1);
-                }
-            } else {
-                String sql = "UPDATE Users SET username=?, email=?, password=?, user_group_id=? WHERE id=?";
-                PreparedStatement psmt = conn.prepareStatement(sql);
-                psmt.setString(1, this.username);
-                psmt.setString(2, this.email);
-                psmt.setString(3, this.password);
-                psmt.setInt(4, this.user_group_id);
-                psmt.setInt(5, this.id);
-                psmt.executeUpdate();
-            }
-        } catch (SQLException e) {
-            System.out.println("Save failed: " + e.getMessage());
-            return false;
-        }
-        return true;
-    }
-
     public static User loadById(int id) {
         try (Connection conn = DatabaseConnection.getConnection()) {
             String sql = "SELECT * FROM Users where id=?";
@@ -160,22 +129,6 @@ public class User {
         }
     }
 
-    public boolean delete() {
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            if (this.id != 0) {
-                String sql = "DELETE FROM Users WHERE id=?";
-                PreparedStatement pstm = conn.prepareStatement(sql);
-                pstm.setInt(1, this.id);
-                pstm.executeUpdate();
-                this.id = 0;
-            }
-        } catch (SQLException e) {
-            System.out.println("Delete failed: " + e.getMessage());
-            return false;
-        }
-        return true;
-    }
-
     public static User[] loadAllByGroupId(int id) {
         try (Connection conn = DatabaseConnection.getConnection()) {
             List<User> users = new ArrayList<>();
@@ -200,20 +153,55 @@ public class User {
         }
     }
 
+    public boolean save() {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            if (this.id == 0) {
+                String sql = "INSERT INTO Users(username, email, password, user_group_id) VALUES (?,?,?,?)";
+                PreparedStatement psmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                psmt.setString(1, this.username);
+                psmt.setString(2, this.email);
+                psmt.setString(3, this.password);
+                psmt.setInt(4, this.user_group_id);
+                psmt.executeUpdate();
+                ResultSet rs = psmt.getGeneratedKeys();
+                if (rs.next()) {
+                    this.id = rs.getInt(1);
+                }
+            } else {
+                String sql = "UPDATE Users SET username=?, email=?, password=?, user_group_id=? WHERE id=?";
+                PreparedStatement psmt = conn.prepareStatement(sql);
+                psmt.setString(1, this.username);
+                psmt.setString(2, this.email);
+                psmt.setString(3, this.password);
+                psmt.setInt(4, this.user_group_id);
+                psmt.setInt(5, this.id);
+                psmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            System.out.println("Save failed: " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    public boolean delete() {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            if (this.id != 0) {
+                String sql = "DELETE FROM Users WHERE id=?";
+                PreparedStatement pstm = conn.prepareStatement(sql);
+                pstm.setInt(1, this.id);
+                pstm.executeUpdate();
+                this.id = 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("Delete failed: " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public String toString() {
-//        return "User{" +
-//                "id=" + id +
-//                ", username='" + username + '\'' +
-//                ", password='" + password + '\'' +
-//                ", email='" + email + '\'' +
-//                ", user_group_id=" + user_group_id +
-//                '}';
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", user_group_id=" + user_group_id +
-                '}';
+        return new StringBuilder().append("User{").append("id=").append(id).append(", username='").append(username).append('\'').append(", email='").append(email).append('\'').append(", user_group_id=").append(user_group_id).append('}').toString();
     }
 }

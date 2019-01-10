@@ -151,7 +151,7 @@ public class Solution {
         }
     }
 
-    public void delete() {
+    public boolean delete() {
         try (Connection conn = DatabaseConnection.getConnection()) {
             if (this.id != 0) {
                 String sql = "DELETE FROM Solutions WHERE id=?";
@@ -162,7 +162,9 @@ public class Solution {
             }
         } catch (SQLException e) {
             System.out.println("Delete failed: " + e.getMessage());
+            return false;
         }
+        return true;
     }
 
     public static Solution[] loadAllByUserId(int id) {

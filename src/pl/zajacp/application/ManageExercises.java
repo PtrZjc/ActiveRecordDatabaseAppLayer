@@ -27,7 +27,7 @@ public class ManageExercises {
                 break;
             case 4:
                 try {
-                    System.out.println("\n All records from the database:");
+                    System.out.println("\n All exercises present in the database:");
                     Arrays.stream(Exercise.loadAll()).forEach(x -> System.out.println(x));
                 } catch (NullPointerException e) {
                     System.out.println("\n There are no records in the database.");
@@ -50,17 +50,7 @@ public class ManageExercises {
         if (exercise.save()) {
             System.out.println("Exercise added successfully to the database.");
         }
-
-        int again = ManageHelper.getInputInt(sc, ManageHelper.ANOTHER_OPERATION, 2);
-        switch (again) {
-            case 1:
-                addExercise(sc);
-                break;
-            case 2:
-                System.out.println("_________________________________\n");
-                crudMenu(sc);
-                break;
-        }
+        runAgain(sc, 1);
     }
 
     private static void editExercise(Scanner sc) {
@@ -75,19 +65,7 @@ public class ManageExercises {
                 System.out.println("Exercise edition saved successfully to the database.");
             }
         }
-
-//        System.out.println();
-
-        int again = ManageHelper.getInputInt(sc, ManageHelper.ANOTHER_OPERATION, 2);
-        switch (again) {
-            case 1:
-                editExercise(sc);
-                break;
-            case 2:
-                System.out.println("_________________________________\n");
-                crudMenu(sc);
-                break;
-        }
+        runAgain(sc, 2);
     }
 
     private static void deleteExercise(Scanner sc) {
@@ -98,19 +76,7 @@ public class ManageExercises {
         if (exercise != null && exercise.delete()) {
             System.out.println("Exercise successfully deleted from the database.");
         }
-
-//        System.out.println();
-
-        int again = ManageHelper.getInputInt(sc, ManageHelper.ANOTHER_OPERATION, 2);
-        switch (again) {
-            case 1:
-                deleteExercise(sc);
-                break;
-            case 2:
-                System.out.println("_________________________________\n");
-                crudMenu(sc);
-                break;
-        }
+        runAgain(sc, 3);
     }
 
     private static String[] getExerciseInput(Scanner sc) {
@@ -124,6 +90,30 @@ public class ManageExercises {
         inputs[0] = name;
         inputs[1] = email;
         return inputs;
+    }
+
+
+    private static void runAgain(Scanner sc, int choice) {
+        int again = ManageHelper.getInputInt(sc, ManageHelper.ANOTHER_OPERATION, 2);
+        switch (again) {
+            case 1:
+                switch (choice) {
+                    case 1:
+                        addExercise(sc);
+                        break;
+                    case 2:
+                        editExercise(sc);
+                        break;
+                    case 3:
+                        deleteExercise(sc);
+                        break;
+                }
+                break;
+            case 2:
+                System.out.println("_________________________________\n");
+                crudMenu(sc);
+                break;
+        }
     }
 }
 

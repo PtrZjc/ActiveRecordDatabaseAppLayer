@@ -27,7 +27,7 @@ public class ManageUsers {
                 break;
             case 4:
                 try {
-                    System.out.println("\n All records from the database:");
+                    System.out.println("\n All users present in the database:");
                     Arrays.stream(User.loadAll()).forEach(x -> System.out.println(x));
                 } catch (NullPointerException e) {
                     System.out.println("\n There are no records in the database.");
@@ -52,17 +52,7 @@ public class ManageUsers {
         if (user.save()) {
             System.out.println("User added successfully to the database.");
         }
-
-        int again = ManageHelper.getInputInt(sc, ManageHelper.ANOTHER_OPERATION, 2);
-        switch (again) {
-            case 1:
-                addUser(sc);
-                break;
-            case 2:
-                System.out.println("_________________________________\n");
-                crudMenu(sc);
-                break;
-        }
+        runAgain(sc, 1);
     }
 
     private static void editUser(Scanner sc) {
@@ -79,19 +69,8 @@ public class ManageUsers {
                 System.out.println("User edition saved successfully to the database.");
             }
         }
+        runAgain(sc, 2);
 
-//        System.out.println();
-
-        int again = ManageHelper.getInputInt(sc, ManageHelper.ANOTHER_OPERATION, 2);
-        switch (again) {
-            case 1:
-                editUser(sc);
-                break;
-            case 2:
-                System.out.println("_________________________________\n");
-                crudMenu(sc);
-                break;
-        }
     }
 
     private static void deleteUser(Scanner sc) {
@@ -102,19 +81,7 @@ public class ManageUsers {
         if (user != null && user.delete()) {
             System.out.println("User successfully deleted from the database.");
         }
-
-//        System.out.println();
-
-        int again = ManageHelper.getInputInt(sc, ManageHelper.ANOTHER_OPERATION, 2);
-        switch (again) {
-            case 1:
-                deleteUser(sc);
-                break;
-            case 2:
-                System.out.println("_________________________________\n");
-                crudMenu(sc);
-                break;
-        }
+        runAgain(sc, 3);
     }
 
     private static Object[] getUserInput(Scanner sc) {
@@ -143,6 +110,29 @@ public class ManageUsers {
         inputs[2] = password;
         inputs[3] = user_group_id;
         return inputs;
+    }
+
+    private static void runAgain(Scanner sc, int choice) {
+        int again = ManageHelper.getInputInt(sc, ManageHelper.ANOTHER_OPERATION, 2);
+        switch (again) {
+            case 1:
+                switch (choice) {
+                    case 1:
+                        addUser(sc);
+                        break;
+                    case 2:
+                        editUser(sc);
+                        break;
+                    case 3:
+                        deleteUser(sc);
+                        break;
+                }
+                break;
+            case 2:
+                System.out.println("_________________________________\n");
+                crudMenu(sc);
+                break;
+        }
     }
 }
 

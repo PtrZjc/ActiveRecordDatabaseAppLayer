@@ -118,9 +118,6 @@ public class UserGroup {
 
     @Override
     public String toString() {
-        return "UserGroup{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return new StringBuilder().append("UserGroup{").append("id=").append(id).append(", name='").append(name).append('\'').append('}').toString();
     }
 }

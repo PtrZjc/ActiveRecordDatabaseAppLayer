@@ -27,7 +27,7 @@ public class ManageUserGroups {
                 break;
             case 4:
                 try {
-                    System.out.println("\n All records from the database:");
+                    System.out.println("\n All user groups present in the database:");
                     Arrays.stream(UserGroup.loadAll()).forEach(x -> System.out.println(x));
                 } catch (NullPointerException e) {
                     System.out.println("\n There are no records in the database.");
@@ -48,17 +48,7 @@ public class ManageUserGroups {
         if (userGroup.save()) {
             System.out.println("UserGroup added successfully to the database.");
         }
-
-        int again = ManageHelper.getInputInt(sc, ManageHelper.ANOTHER_OPERATION, 2);
-        switch (again) {
-            case 1:
-                addUserGroup(sc);
-                break;
-            case 2:
-                System.out.println("_________________________________\n");
-                crudMenu(sc);
-                break;
-        }
+        runAgain(sc, 1);
     }
 
     private static void editUserGroup(Scanner sc) {
@@ -71,17 +61,7 @@ public class ManageUserGroups {
                 System.out.println("User group edition saved successfully to the database.");
             }
         }
-
-        int again = ManageHelper.getInputInt(sc, ManageHelper.ANOTHER_OPERATION, 2);
-        switch (again) {
-            case 1:
-                editUserGroup(sc);
-                break;
-            case 2:
-                System.out.println("_________________________________\n");
-                crudMenu(sc);
-                break;
-        }
+        runAgain(sc, 2);
     }
 
     private static void deleteUserGroup(Scanner sc) {
@@ -92,25 +72,36 @@ public class ManageUserGroups {
         if (userGroup != null && userGroup.delete()) {
             System.out.println("User group successfully deleted from the database.");
         }
-
-//        System.out.println();
-
-        int again = ManageHelper.getInputInt(sc, ManageHelper.ANOTHER_OPERATION, 2);
-        switch (again) {
-            case 1:
-                deleteUserGroup(sc);
-                break;
-            case 2:
-                System.out.println("_________________________________\n");
-                crudMenu(sc);
-                break;
-        }
+        runAgain(sc, 3);
     }
 
     private static String getUserGroupInput(Scanner sc) {
         System.out.print("Type user group name: ");
         sc.nextLine();
         return sc.nextLine();
+    }
+
+    private static void runAgain(Scanner sc, int choice) {
+        int again = ManageHelper.getInputInt(sc, ManageHelper.ANOTHER_OPERATION, 2);
+        switch (again) {
+            case 1:
+                switch (choice) {
+                    case 1:
+                        addUserGroup(sc);
+                        break;
+                    case 2:
+                        editUserGroup(sc);
+                        break;
+                    case 3:
+                        deleteUserGroup(sc);
+                        break;
+                }
+                break;
+            case 2:
+                System.out.println("_________________________________\n");
+                crudMenu(sc);
+                break;
+        }
     }
 }
 

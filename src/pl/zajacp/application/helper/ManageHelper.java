@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class ManageHelper {
 
     public static final String CRUD_SELECTION = "Pick one of the options:\n 1) Add\n 2) Edit\n 3) Delete\n 4) Show all records\n 5) Quit\nYour choice (number): ";
+    public static final String SOLUTION_SELECTION = "Pick one of the options:\n 1) Assign exercise to user\n 2) View exercises of chosen user\n 3) Unassign exercise (and delete solution)\n 4) Quit \nYour choice (number): ";
     public static final String ANOTHER_OPERATION = "Do you want to perform operation again?\n 1) Yes\n 2) No\nYour choice (number): ";
 
     public static int getInputInt(Scanner sc, String message, int upperBound) {
