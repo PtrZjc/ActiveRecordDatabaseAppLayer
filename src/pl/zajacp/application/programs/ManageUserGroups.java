@@ -1,6 +1,7 @@
-package pl.zajacp.application;
+package pl.zajacp.application.programs;
 
-import pl.zajacp.application.helper.ManageHelper;
+import pl.zajacp.application.AdminPanel;
+import pl.zajacp.application.Helper;
 import pl.zajacp.model.UserGroup;
 
 import java.util.Arrays;
@@ -8,13 +9,8 @@ import java.util.Scanner;
 
 public class ManageUserGroups {
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        crudMenu(sc);
-    }
-
-    private static void crudMenu(Scanner sc) {
-        int choice = ManageHelper.getInputInt(sc, ManageHelper.CRUD_SELECTION, 5);
+    public static void crudMenu(Scanner sc) {
+        int choice = Helper.getInputInt(sc, Helper.CRUD_SELECTION, 5);
         switch (choice) {
             case 1:
                 addUserGroup(sc);
@@ -35,6 +31,9 @@ public class ManageUserGroups {
                 System.out.println();
                 crudMenu(sc);
                 break;
+            case 5:
+                AdminPanel.selectProgram(sc);
+                break;
         }
     }
 
@@ -53,7 +52,7 @@ public class ManageUserGroups {
 
     private static void editUserGroup(Scanner sc) {
         System.out.println("\nEditing existing user group in the database:");
-        int userGroupId = ManageHelper.getInputInt(sc, "Type id of user group to be edited:", Integer.MAX_VALUE);
+        int userGroupId = Helper.getInputInt(sc, "Type id of user group to be edited:", Integer.MAX_VALUE);
         UserGroup userGroup = UserGroup.loadById(userGroupId);
         if (userGroup != null) {
             userGroup.setName(getUserGroupInput(sc));
@@ -67,7 +66,7 @@ public class ManageUserGroups {
     private static void deleteUserGroup(Scanner sc) {
 
         System.out.println("\nDeleting user group from the database:");
-        int userGroupId = ManageHelper.getInputInt(sc, "Type id of user group to be deleted: ", Integer.MAX_VALUE);
+        int userGroupId = Helper.getInputInt(sc, "Type id of user group to be deleted: ", Integer.MAX_VALUE);
         UserGroup userGroup = UserGroup.loadById(userGroupId);
         if (userGroup != null && userGroup.delete()) {
             System.out.println("User group successfully deleted from the database.");
@@ -82,7 +81,7 @@ public class ManageUserGroups {
     }
 
     private static void runAgain(Scanner sc, int choice) {
-        int again = ManageHelper.getInputInt(sc, ManageHelper.ANOTHER_OPERATION, 2);
+        int again = Helper.getInputInt(sc, Helper.ANOTHER_OPERATION, 2);
         switch (again) {
             case 1:
                 switch (choice) {
@@ -98,7 +97,7 @@ public class ManageUserGroups {
                 }
                 break;
             case 2:
-                System.out.println("_________________________________\n");
+                System.out.println();
                 crudMenu(sc);
                 break;
         }

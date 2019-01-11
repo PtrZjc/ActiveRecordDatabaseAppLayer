@@ -1,6 +1,7 @@
-package pl.zajacp.application;
+package pl.zajacp.application.programs;
 
-import pl.zajacp.application.helper.ManageHelper;
+import pl.zajacp.application.AdminPanel;
+import pl.zajacp.application.Helper;
 import pl.zajacp.model.Exercise;
 
 import java.util.Arrays;
@@ -8,13 +9,8 @@ import java.util.Scanner;
 
 public class ManageExercises {
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        crudMenu(sc);
-    }
-
-    private static void crudMenu(Scanner sc) {
-        int choice = ManageHelper.getInputInt(sc, ManageHelper.CRUD_SELECTION, 5);
+    public static void crudMenu(Scanner sc) {
+        int choice = Helper.getInputInt(sc, Helper.CRUD_SELECTION, 5);
         switch (choice) {
             case 1:
                 addExercise(sc);
@@ -34,6 +30,9 @@ public class ManageExercises {
                 }
                 System.out.println();
                 crudMenu(sc);
+                break;
+            case 5:
+                AdminPanel.selectProgram(sc);
                 break;
         }
     }
@@ -55,7 +54,7 @@ public class ManageExercises {
 
     private static void editExercise(Scanner sc) {
         System.out.println("\nEditing existing Exercise in the database:");
-        int exerciseId = ManageHelper.getInputInt(sc, "Type id of exercise to be edited: ", Integer.MAX_VALUE);
+        int exerciseId = Helper.getInputInt(sc, "Type id of exercise to be edited: ", Integer.MAX_VALUE);
         Exercise exercise = Exercise.loadById(exerciseId);
         if (exercise != null) {
             String[] input = getExerciseInput(sc);
@@ -70,7 +69,7 @@ public class ManageExercises {
 
     private static void deleteExercise(Scanner sc) {
         System.out.println("\nDeleting Exercise from the database:");
-        int exerciseId = ManageHelper.getInputInt(sc, "Type id of exercise to be deleted: ", Integer.MAX_VALUE);
+        int exerciseId = Helper.getInputInt(sc, "Type id of exercise to be deleted: ", Integer.MAX_VALUE);
         Exercise exercise = Exercise.loadById(exerciseId);
         if (exercise != null && exercise.delete()) {
             System.out.println("Exercise successfully deleted from the database.");
@@ -92,7 +91,7 @@ public class ManageExercises {
     }
 
     private static void runAgain(Scanner sc, int choice) {
-        int again = ManageHelper.getInputInt(sc, ManageHelper.ANOTHER_OPERATION, 2);
+        int again = Helper.getInputInt(sc, Helper.ANOTHER_OPERATION, 2);
         switch (again) {
             case 1:
                 switch (choice) {
@@ -108,7 +107,7 @@ public class ManageExercises {
                 }
                 break;
             case 2:
-                System.out.println("_________________________________\n");
+                System.out.println();
                 crudMenu(sc);
                 break;
         }
