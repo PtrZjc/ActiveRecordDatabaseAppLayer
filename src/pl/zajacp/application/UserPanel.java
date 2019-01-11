@@ -14,34 +14,34 @@ public class UserPanel {
     public static void welcome() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Welcome to user panel.");
-        login(sc);
-        sc.close();
+        login();
+        Helper.sc.close();
     }
 
-    public static void login(Scanner sc) {
-        UserPanel.userID = Helper.getInputInt(sc, "\nType ID to login: ", Integer.MAX_VALUE);
+    public static void login() {
+        UserPanel.userID = Helper.getInputInt("\nType ID to login: ", Integer.MAX_VALUE);
         User currentUser = User.loadById(userID);
         if (currentUser == null) {
-            runAgain(sc, 1);
+            runAgain( 1);
         } else {
-            userMenu(sc);
+            userMenu();
         }
     }
 
-    private static void userMenu(Scanner sc) {
-        int choice = Helper.getInputInt(sc, USER_PANEL_SELECT, 4);
+    private static void userMenu() {
+        int choice = Helper.getInputInt( USER_PANEL_SELECT, 4);
         switch (choice) {
             case 1:
-                addSolution(sc);
+                addSolution();
                 break;
             case 2:
-                viewSolution(sc);
+                viewSolution();
                 break;
             case 3:
         }
     }
 
-    private static void addSolution(Scanner sc) {
+    private static void addSolution() {
         Exercise[] exercises = Exercise.loadAll();
         Set<Integer> solutionID = new HashSet<>();
 
@@ -50,10 +50,10 @@ public class UserPanel {
         Arrays.stream(exercises).filter(x -> !solutionID.contains(x.getId())).forEach(System.out::println);
         System.out.println();
 
-        int exerciseId = Helper.getInputInt(sc, "Type id of exercise to assign the solution to: ", Integer.MAX_VALUE);
+        int exerciseId = Helper.getInputInt( "Type id of exercise to assign the solution to: ", Integer.MAX_VALUE);
         System.out.println("Type in the solution description: ");
-        sc.nextLine();
-        String description = sc.nextLine();
+        Helper.sc.nextLine();
+        String description = Helper.sc.nextLine();
 
         Solution solution = new Solution();
         solution.setExercise_id(exerciseId);
@@ -63,10 +63,10 @@ public class UserPanel {
         if (solution.save()) {
             System.out.println("Solution successfully saved in the database. ");
         }
-        runAgain(sc, 2);
+        runAgain( 2);
     }
 
-    private static void viewSolution(Scanner sc) {
+    private static void viewSolution() {
         Map<Integer, Integer> userExercises = new TreeMap<>();
 
         System.out.println("List of your exercises:\n");
@@ -79,23 +79,23 @@ public class UserPanel {
             System.out.println(x);
         });
         System.out.println();
-        userMenu(sc);
+        userMenu();
 
     }
 
-    private static void runAgain(Scanner sc, int choice) {
-        int again = Helper.getInputInt(sc, Helper.ANOTHER_OPERATION, 2);
+    private static void runAgain(int choice) {
+        int again = Helper.getInputInt( Helper.ANOTHER_OPERATION, 2);
         switch (again) {
             case 1:
                 switch (choice) {
                     case 1:
-                        login(sc);
+                        login();
                         break;
                     case 2:
-                        addSolution(sc);
+                        addSolution();
                         break;
                     case 3:
-                        viewSolution(sc);
+                        viewSolution();
                         break;
                 }
                 break;
@@ -106,7 +106,7 @@ public class UserPanel {
                     case 2:
                     case 3:
                         System.out.println();
-                        userMenu(sc);
+                        userMenu();
                         break;
                 }
                 break;

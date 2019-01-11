@@ -11,25 +11,25 @@ public class AdminPanel {
     public static void welcome(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Welcome to administrative panel.");
-        selectProgram(sc);
-        sc.close();
+        selectProgram();
+        Helper.sc.close();
     }
-    public static void selectProgram(Scanner sc) {
+    public static void selectProgram() {
 
-        int choice = Helper.getInputInt(sc, ADMIN_PANEL_SELECT, 5);
+        int choice = Helper.getInputInt( ADMIN_PANEL_SELECT, 5);
 
         switch (choice) {
             case 1:
-                ManageUsers.crudMenu(sc);
+                ManageUsers.crudMenu();
                 break;
             case 2:
-                ManageExercises.crudMenu(sc);
+                ManageExercises.crudMenu();
                 break;
             case 3:
-                ManageUserGroups.crudMenu(sc);
+                ManageUserGroups.crudMenu();
                 break;
             case 4:
-                ManageSolutions.crudMenu(sc);
+                ManageSolutions.crudMenu();
             case 5:
                 break;
         }

@@ -9,17 +9,17 @@ import java.util.Scanner;
 
 public class ManageUserGroups {
 
-    public static void crudMenu(Scanner sc) {
-        int choice = Helper.getInputInt(sc, Helper.CRUD_SELECTION, 5);
+    public static void crudMenu() {
+        int choice = Helper.getInputInt( Helper.CRUD_SELECTION, 5);
         switch (choice) {
             case 1:
-                addUserGroup(sc);
+                addUserGroup();
                 break;
             case 2:
-                editUserGroup(sc);
+                editUserGroup();
                 break;
             case 3:
-                deleteUserGroup(sc);
+                deleteUserGroup();
                 break;
             case 4:
                 try {
@@ -29,76 +29,76 @@ public class ManageUserGroups {
                     System.out.println("\n There are no records in the database.");
                 }
                 System.out.println();
-                crudMenu(sc);
+                crudMenu();
                 break;
             case 5:
-                AdminPanel.selectProgram(sc);
+                AdminPanel.selectProgram();
                 break;
         }
     }
 
-    private static void addUserGroup(Scanner sc) {
+    private static void addUserGroup() {
         System.out.println("\nAdding new user group to the database:");
 
         UserGroup userGroup = new UserGroup();
-        userGroup.setName(getUserGroupInput(sc));
+        userGroup.setName(getUserGroupInput());
 
         System.out.println();
         if (userGroup.save()) {
             System.out.println("UserGroup added successfully to the database.");
         }
-        runAgain(sc, 1);
+        runAgain( 1);
     }
 
-    private static void editUserGroup(Scanner sc) {
+    private static void editUserGroup() {
         System.out.println("\nEditing existing user group in the database:");
-        int userGroupId = Helper.getInputInt(sc, "Type id of user group to be edited:", Integer.MAX_VALUE);
+        int userGroupId = Helper.getInputInt( "Type id of user group to be edited:", Integer.MAX_VALUE);
         UserGroup userGroup = UserGroup.loadById(userGroupId);
         if (userGroup != null) {
-            userGroup.setName(getUserGroupInput(sc));
+            userGroup.setName(getUserGroupInput());
             if (userGroup.save()) {
                 System.out.println("User group edition saved successfully to the database.");
             }
         }
-        runAgain(sc, 2);
+        runAgain( 2);
     }
 
-    private static void deleteUserGroup(Scanner sc) {
+    private static void deleteUserGroup() {
 
         System.out.println("\nDeleting user group from the database:");
-        int userGroupId = Helper.getInputInt(sc, "Type id of user group to be deleted: ", Integer.MAX_VALUE);
+        int userGroupId = Helper.getInputInt( "Type id of user group to be deleted: ", Integer.MAX_VALUE);
         UserGroup userGroup = UserGroup.loadById(userGroupId);
         if (userGroup != null && userGroup.delete()) {
             System.out.println("User group successfully deleted from the database.");
         }
-        runAgain(sc, 3);
+        runAgain( 3);
     }
 
-    private static String getUserGroupInput(Scanner sc) {
+    private static String getUserGroupInput() {
         System.out.print("Type user group name: ");
-        sc.nextLine();
-        return sc.nextLine();
+        Helper.sc.nextLine();
+        return Helper.sc.nextLine();
     }
 
-    private static void runAgain(Scanner sc, int choice) {
-        int again = Helper.getInputInt(sc, Helper.ANOTHER_OPERATION, 2);
+    private static void runAgain(int choice) {
+        int again = Helper.getInputInt( Helper.ANOTHER_OPERATION, 2);
         switch (again) {
             case 1:
                 switch (choice) {
                     case 1:
-                        addUserGroup(sc);
+                        addUserGroup();
                         break;
                     case 2:
-                        editUserGroup(sc);
+                        editUserGroup();
                         break;
                     case 3:
-                        deleteUserGroup(sc);
+                        deleteUserGroup();
                         break;
                 }
                 break;
             case 2:
                 System.out.println();
-                crudMenu(sc);
+                crudMenu();
                 break;
         }
     }

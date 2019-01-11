@@ -9,17 +9,17 @@ import java.util.Scanner;
 
 public class ManageExercises {
 
-    public static void crudMenu(Scanner sc) {
-        int choice = Helper.getInputInt(sc, Helper.CRUD_SELECTION, 5);
+    public static void crudMenu() {
+        int choice = Helper.getInputInt( Helper.CRUD_SELECTION, 5);
         switch (choice) {
             case 1:
-                addExercise(sc);
+                addExercise();
                 break;
             case 2:
-                editExercise(sc);
+                editExercise();
                 break;
             case 3:
-                deleteExercise(sc);
+                deleteExercise();
                 break;
             case 4:
                 try {
@@ -29,18 +29,18 @@ public class ManageExercises {
                     System.out.println("\n There are no records in the database.");
                 }
                 System.out.println();
-                crudMenu(sc);
+                crudMenu();
                 break;
             case 5:
-                AdminPanel.selectProgram(sc);
+                AdminPanel.selectProgram();
                 break;
         }
     }
 
-    private static void addExercise(Scanner sc) {
+    private static void addExercise() {
         System.out.println("\nAdding new exercise to the database:");
 
-        String[] input = getExerciseInput(sc);
+        String[] input = getExerciseInput();
         Exercise exercise = new Exercise();
         exercise.setTitle(input[0]);
         exercise.setDescription(input[1]);
@@ -49,40 +49,40 @@ public class ManageExercises {
         if (exercise.save()) {
             System.out.println("Exercise added successfully to the database.");
         }
-        runAgain(sc, 1);
+        runAgain( 1);
     }
 
-    private static void editExercise(Scanner sc) {
+    private static void editExercise() {
         System.out.println("\nEditing existing Exercise in the database:");
-        int exerciseId = Helper.getInputInt(sc, "Type id of exercise to be edited: ", Integer.MAX_VALUE);
+        int exerciseId = Helper.getInputInt( "Type id of exercise to be edited: ", Integer.MAX_VALUE);
         Exercise exercise = Exercise.loadById(exerciseId);
         if (exercise != null) {
-            String[] input = getExerciseInput(sc);
+            String[] input = getExerciseInput();
             exercise.setTitle(input[0]);
             exercise.setDescription(input[1]);
             if (exercise.save()) {
                 System.out.println("Exercise edition saved successfully to the database.");
             }
         }
-        runAgain(sc, 2);
+        runAgain( 2);
     }
 
-    private static void deleteExercise(Scanner sc) {
+    private static void deleteExercise() {
         System.out.println("\nDeleting Exercise from the database:");
-        int exerciseId = Helper.getInputInt(sc, "Type id of exercise to be deleted: ", Integer.MAX_VALUE);
+        int exerciseId = Helper.getInputInt( "Type id of exercise to be deleted: ", Integer.MAX_VALUE);
         Exercise exercise = Exercise.loadById(exerciseId);
         if (exercise != null && exercise.delete()) {
             System.out.println("Exercise successfully deleted from the database.");
         }
-        runAgain(sc, 3);
+        runAgain( 3);
     }
 
-    private static String[] getExerciseInput(Scanner sc) {
+    private static String[] getExerciseInput() {
         System.out.print("Type exercise name: ");
-        sc.nextLine();
-        String name = sc.nextLine();
+        Helper.sc.nextLine();
+        String name = Helper.sc.nextLine();
         System.out.print("Type exercise description: ");
-        String email = sc.nextLine();
+        String email = Helper.sc.nextLine();
 
         String[] inputs = new String[2];
         inputs[0] = name;
@@ -90,25 +90,25 @@ public class ManageExercises {
         return inputs;
     }
 
-    private static void runAgain(Scanner sc, int choice) {
-        int again = Helper.getInputInt(sc, Helper.ANOTHER_OPERATION, 2);
+    private static void runAgain(int choice) {
+        int again = Helper.getInputInt( Helper.ANOTHER_OPERATION, 2);
         switch (again) {
             case 1:
                 switch (choice) {
                     case 1:
-                        addExercise(sc);
+                        addExercise();
                         break;
                     case 2:
-                        editExercise(sc);
+                        editExercise();
                         break;
                     case 3:
-                        deleteExercise(sc);
+                        deleteExercise();
                         break;
                 }
                 break;
             case 2:
                 System.out.println();
-                crudMenu(sc);
+                crudMenu();
                 break;
         }
     }

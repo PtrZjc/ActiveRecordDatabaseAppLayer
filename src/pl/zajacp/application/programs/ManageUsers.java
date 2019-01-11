@@ -9,17 +9,17 @@ import java.util.Scanner;
 
 public class ManageUsers {
 
-    public static void crudMenu(Scanner sc) {
-        int choice = Helper.getInputInt(sc, Helper.CRUD_SELECTION, 5);
+    public static void crudMenu() {
+        int choice = Helper.getInputInt( Helper.CRUD_SELECTION, 5);
         switch (choice) {
             case 1:
-                addUser(sc);
+                addUser();
                 break;
             case 2:
-                editUser(sc);
+                editUser();
                 break;
             case 3:
-                deleteUser(sc);
+                deleteUser();
                 break;
             case 4:
                 try {
@@ -29,18 +29,18 @@ public class ManageUsers {
                     System.out.println("\n There are no records in the database.");
                 }
                 System.out.println();
-                crudMenu(sc);
+                crudMenu();
                 break;
             case 5:
-                AdminPanel.selectProgram(sc);
+                AdminPanel.selectProgram();
                 break;
         }
     }
 
-    private static void addUser(Scanner sc) {
+    private static void addUser() {
         System.out.println("\nAdding new user to the database:");
 
-        Object[] input = getUserInput(sc);
+        Object[] input = getUserInput();
         User user = new User();
         user.setUsername((String) input[0]);
         user.setEmail((String) input[1]);
@@ -51,15 +51,15 @@ public class ManageUsers {
         if (user.save()) {
             System.out.println("User added successfully to the database.");
         }
-        runAgain(sc, 1);
+        runAgain( 1);
     }
 
-    private static void editUser(Scanner sc) {
+    private static void editUser() {
         System.out.println("\nEditing existing User in the database:");
-        int userId = Helper.getInputInt(sc, "Type id of user to be edited: ", Integer.MAX_VALUE);
+        int userId = Helper.getInputInt( "Type id of user to be edited: ", Integer.MAX_VALUE);
         User user = User.loadById(userId);
         if (user != null) {
-            Object[] input = getUserInput(sc);
+            Object[] input = getUserInput();
             user.setUsername((String) input[0]);
             user.setEmail((String) input[1]);
             user.setPassword((String) input[2]);
@@ -68,40 +68,40 @@ public class ManageUsers {
                 System.out.println("User edition saved successfully to the database.");
             }
         }
-        runAgain(sc, 2);
+        runAgain( 2);
 
     }
 
-    private static void deleteUser(Scanner sc) {
+    private static void deleteUser() {
 
         System.out.println("\nDeleting User from the database:");
-        int userId = Helper.getInputInt(sc, "Type id of user to be deleted: ", Integer.MAX_VALUE);
+        int userId = Helper.getInputInt( "Type id of user to be deleted: ", Integer.MAX_VALUE);
         User user = User.loadById(userId);
         if (user != null && user.delete()) {
             System.out.println("User successfully deleted from the database.");
         }
-        runAgain(sc, 3);
+        runAgain( 3);
     }
 
-    private static Object[] getUserInput(Scanner sc) {
+    private static Object[] getUserInput() {
         System.out.print("Type username: ");
-        String username = sc.next();
+        String username = Helper.sc.next();
         System.out.print("Type email: ");
-        String email = sc.next();
+        String email = Helper.sc.next();
         while (!User.checkEmail(email)) {
             System.out.println("Incorrect email.");
             System.out.print("Type email: ");
-            email = sc.next();
+            email = Helper.sc.next();
         }
         System.out.print("Type password: ");
-        String password = sc.next();
+        String password = Helper.sc.next();
         System.out.print("Type id of group the user belongs to:  ");
-        while (!sc.hasNextInt()) {
+        while (!Helper.sc.hasNextInt()) {
             System.out.println("Incorrect user group id.");
             System.out.print("Type id of group the user belongs to:  ");
-            sc.next();
+            Helper.sc.next();
         }
-        int user_group_id = sc.nextInt();
+        int user_group_id = Helper.sc.nextInt();
 
         Object[] inputs = new Object[4];
         inputs[0] = username;
@@ -111,25 +111,25 @@ public class ManageUsers {
         return inputs;
     }
 
-    private static void runAgain(Scanner sc, int choice) {
-        int again = Helper.getInputInt(sc, Helper.ANOTHER_OPERATION, 2);
+    private static void runAgain(int choice) {
+        int again = Helper.getInputInt( Helper.ANOTHER_OPERATION, 2);
         switch (again) {
             case 1:
                 switch (choice) {
                     case 1:
-                        addUser(sc);
+                        addUser();
                         break;
                     case 2:
-                        editUser(sc);
+                        editUser();
                         break;
                     case 3:
-                        deleteUser(sc);
+                        deleteUser();
                         break;
                 }
                 break;
             case 2:
                 System.out.println();
-                crudMenu(sc);
+                crudMenu();
                 break;
         }
     }
