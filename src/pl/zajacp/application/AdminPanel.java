@@ -6,10 +6,6 @@ import java.util.Scanner;
 
 public class AdminPanel {
 
-    public static void main(String[] args) {
-        welcome();
-    }
-
     private static final String ADMIN_PANEL_SELECT = "\nChoose which program to run:\n 1) Manage the users\n 2) Manage the exercises\n 3) Manage the groups \n 4) Assign exercise to users \n 5) Quit \nYour choice (number): ";
 
     public static void welcome(){

@@ -7,6 +7,7 @@ import pl.zajacp.model.User;
 import java.util.*;
 
 public class UserPanel {
+
     private static Integer userID;
     private static final String USER_PANEL_SELECT = "User panel.\nPick one of the options:\n 1) Add solution to the exercise\n 2) View your exercises\n 3) Quit \nYour choice (number): ";
 
